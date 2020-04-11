@@ -36,8 +36,11 @@ public class Main extends Application {
 
     //imgs
     private static final String EARTH_MAP_IMG = "/resources/img/earthMap.jpg";
+    private static final String EARTH = "/resources/img/earth.png";
+    private static final String TEST = "/resources/img/earthWoScale.png";
+    private static final String PYTHON_EARTH = "/resources/img/pythonEarth.png";
 
-    private static final int RADIUS = 50;
+    private static final int RADIUS = 400;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
     private double anchX, anchY, anchAngX = 0,  anchAngY = 0;
@@ -82,11 +85,12 @@ public class Main extends Application {
 
         rg.translateXProperty().set(WIDTH/2);
         rg.translateYProperty().set(HEIGHT/2);
-        rg.translateZProperty().set(-800);
+        rg.translateZProperty().set(900);
 
 
         PhongMaterial mat = new PhongMaterial();
-        mat.setDiffuseMap(new Image(getClass().getResourceAsStream(EARTH_MAP_IMG)));
+
+        mat.setDiffuseMap(new Image(getClass().getResourceAsStream(PYTHON_EARTH)));;
         s.setMaterial(mat);
 
         initMouseControl(rg,scene);
