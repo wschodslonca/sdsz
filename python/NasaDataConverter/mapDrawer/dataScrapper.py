@@ -69,7 +69,9 @@ class DataScrapper:
         data = []
         for i in list:
             for j in i:
-                if j>=0 and j<25:
+                if j==0: # brak danych
+                    data.append((128,128,128))
+                elif j>0 and j<25:
                     data.append((51,0,25))
                 elif j>=25 and j<50:
                     data.append((102,0,51))

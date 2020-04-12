@@ -1,11 +1,14 @@
 package main;
 
 import java.lang.String;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
@@ -36,11 +39,10 @@ public class Main extends Application {
 
     //imgs
     private static final String EARTH_MAP_IMG = "/resources/img/earthMap.jpg";
-    private static final String EARTH = "/resources/img/earth.png";
-    private static final String TEST = "/resources/img/earthWoScale.png";
-    private static final String PYTHON_EARTH = "/resources/img/pythonEarth.png";
+    private static final String TEST = "/resources/img/earth288.png";
+    private static final String NASA_IMG_PATH = "/resources/img/nasa/2000/";
 
-    private static final int RADIUS = 400;
+    private static final int RADIUS = 180;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
     private double anchX, anchY, anchAngX = 0,  anchAngY = 0;
@@ -85,15 +87,34 @@ public class Main extends Application {
 
         rg.translateXProperty().set(WIDTH/2);
         rg.translateYProperty().set(HEIGHT/2);
-        rg.translateZProperty().set(900);
+        rg.translateZProperty().set(400);
 
 
         PhongMaterial mat = new PhongMaterial();
-
-        mat.setDiffuseMap(new Image(getClass().getResourceAsStream(PYTHON_EARTH)));;
+        AtomicInteger imgNr = new AtomicInteger(1);
+        final String path = NASA_IMG_PATH+Integer.toString(imgNr.get())+".png";
+        Image map = new Image(getClass().getResourceAsStream(TEST));
+        mat.setDiffuseMap(map);;
         s.setMaterial(mat);
 
         initMouseControl(rg,scene);
+        primaryStage.addEventHandler(KeyEvent.KEY_PRESSED,keyEvent -> {
+            switch(keyEvent.getCode()) {
+                case LEFT:
+                    if (imgNr.get()>1) {
+                        imgNr.getAndDecrement();
+                        mat.setDiffuseMap(new Image(getClass().getResourceAsStream(NASA_IMG_PATH + Integer.toString(imgNr.get()) + ".png")));
+                    }
+                    break;
+                case RIGHT:
+                    if(imgNr.get()<366) {
+                        imgNr.getAndIncrement();
+                        mat.setDiffuseMap(new Image(getClass().getResourceAsStream(NASA_IMG_PATH+Integer.toString(imgNr.get())+".png")));
+                    }
+                    break;
+
+            }
+        });
         primaryStage.setTitle("sdsz");
         primaryStage.setScene(scene);
         primaryStage.show();
