@@ -1,4 +1,4 @@
-from mapDrawer.dataScrapper import DataScrapper
+from mapDrawer.dataScraper import DataScrapper
 from PIL import Image
 
 def convertToPng(fileFrom,fileTo):

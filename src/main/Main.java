@@ -40,7 +40,7 @@ public class Main extends Application {
     //imgs
     private static final String EARTH_MAP_IMG = "/resources/img/earthMap.jpg";
     private static final String TEST = "/resources/img/earth288.png";
-    private static final String NASA_IMG_PATH = "/resources/img/nasa/2000/";
+    private static final String NASA_IMG_PATH = "/resources/img/nasa/1999/";
 
     private static final int RADIUS = 180;
     private static final int WIDTH = 800;
@@ -82,7 +82,7 @@ public class Main extends Application {
 
         Camera camera = new PerspectiveCamera(true);
         Scene scene = new Scene(group, WIDTH, HEIGHT);
-        scene.setFill(Color.NAVY);
+        scene.setFill(Color.GREY);
         scene.setCamera(new PerspectiveCamera());
 
         rg.translateXProperty().set(WIDTH/2);
@@ -107,7 +107,7 @@ public class Main extends Application {
                     }
                     break;
                 case RIGHT:
-                    if(imgNr.get()<366) {
+                    if(imgNr.get()<364) {
                         imgNr.getAndIncrement();
                         mat.setDiffuseMap(new Image(getClass().getResourceAsStream(NASA_IMG_PATH+Integer.toString(imgNr.get())+".png")));
                     }
