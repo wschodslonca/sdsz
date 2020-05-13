@@ -1,13 +1,15 @@
 from mapDrawer.dataScraper import DataScraper
 from PIL import Image
 
+ALPHA = 255
+
 def convertToPng(fileFrom,fileTo):
     scraper = DataScraper(fileFrom)
     data = scraper.nasaDataToRgb()
     img = Image.new('RGB',(scraper.long,scraper.lat))
     img.putdata(data)
     try:
-        img.putalpha(230)
+        img.putalpha(ALPHA)
     except:
         print('failure...')
 
@@ -27,7 +29,7 @@ def convertToPngByList(l,fileTo):
     img = Image.new('RGB', (scraper.long, scraper.lat))
     img.putdata(data)
     try:
-        img.putalpha(230)
+        img.putalpha(ALPHA)
     except:
         print('failure...')
 

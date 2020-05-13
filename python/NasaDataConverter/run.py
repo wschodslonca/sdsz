@@ -3,7 +3,7 @@ import os
 import time
 
 
-YEAR = 2006
+YEAR = 1980
 
 #-180 = W 180 = N
 
