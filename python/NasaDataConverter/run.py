@@ -3,7 +3,7 @@ import os
 import time
 
 
-YEAR = 1999
+YEAR = 2006
 
 #-180 = W 180 = N
 
@@ -12,7 +12,7 @@ YEAR = 1999
 
 start = time.time()
 g = 1
-for dirpath, dirnames, filenames in os.walk("resources/data/texts/1999"):
+for dirpath, dirnames, filenames in os.walk(f"resources/data/texts/{YEAR}"):
     filenames.sort()
     for i in filenames:
         frompath = os.path.join(dirpath,i)

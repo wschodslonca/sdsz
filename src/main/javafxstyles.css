@@ -1,0 +1,29 @@
+.vbox {
+	-fx-background-color: #c0c0c0;
+	-fx-pref-width:200px;
+	-fx-border-color:black;
+	-fx-border-width:1px;
+	-fx-border-style:solid;
+}
+.gridpane {
+	-fx-background-color: #c0c0c0;
+	-fx-border-color:white;
+	-fx-border-width:1px;
+	-fx-border-style:solid;
+	//-fx-grid-lines-visible:true;
+	-fx-hgap:10px;
+	-fx-vgap:10px;
+}
+.pane {
+	-fx-background-color: darkblue;
+	-fx-border-color:white;
+	-fx-border-width:2px;
+	-fx-border-style:solid;
+}
+.img {
+    -fx-pref-width:362px;
+    -fx-pref-height:182px;
+    -fx-border-color:white;
+	-fx-border-width:2px;
+	-fx-border-style:solid;
+}

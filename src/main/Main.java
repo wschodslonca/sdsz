@@ -7,50 +7,53 @@ import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Transform;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
-    class RotatingGroup extends Group{
-        Rotate r;
-        Transform t = new Rotate();
-        public void rx(int angle) {
-            r = new Rotate(angle,Rotate.X_AXIS);
-            t = t.createConcatenation(r);
-            this.getTransforms().clear();
-            this.getTransforms().addAll(t);
+    public class ImageHolder {
+        Image im;
+        ImageHolder(String path) {
+            im = new Image(getClass().getResourceAsStream(path));
         }
-        public void ry(int angle) {
-            r = new Rotate(angle,Rotate.Y_AXIS);
-            t = t.createConcatenation(r);
-            this.getTransforms().clear();
-            this.getTransforms().addAll(t);
+        public Image getImg() {
+            return this.im;
         }
-
-
+        public void setImage(Image im) {
+            this.im = im;
+        }
     }
 
+
+    private static final int YEARL = 2005; // year of legit data
+    private static final int YEARS = 2006; // year of simulated data
     //imgs
+
     private static final String EARTH_MAP_IMG = "/resources/img/earthMap.jpg";
     private static final String TEST = "/resources/img/earth288.png";
-    private static final String NASA_IMG_PATH = "/resources/img/nasa/1999/";
+    private static final String NASA_IMG_PATH_LEGIT = "/resources/img/nasa/"+YEARL+"/";
+    private static final String NASA_IMG_PATH_SIM = "/resources/img/nasa/"+YEARS+"/";
 
     private static final int RADIUS = 180;
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    private static final int WIDTH = 1024;
+    private static final int HEIGHT = 768;
     private double anchX, anchY, anchAngX = 0,  anchAngY = 0;
     private final DoubleProperty angX = new SimpleDoubleProperty(0);
     private final DoubleProperty angY = new SimpleDoubleProperty(0);
+    private static final int EARTHX = 100;
+    private static final int EARTHY = 100;
 
 
-    private void initMouseControl(RotatingGroup g, Scene scene) {
+
+    private void initMouseControl(Parent g) {
         Rotate xRot, yRot;
         g.getTransforms().addAll(
                 xRot = new Rotate(0,Rotate.X_AXIS),
@@ -58,14 +61,14 @@ public class Main extends Application {
         );
         xRot.angleProperty().bind(angX);
         yRot.angleProperty().bind(angY);
-        scene.setOnMousePressed(event -> {
+        g.setOnMousePressed(event -> {
             anchX = event.getSceneX();
             anchY = event.getSceneY();
             anchAngX = angX.get();
             anchAngY = angY.get();
         });
 
-        scene.setOnMouseDragged(event -> {
+        g.setOnMouseDragged(event -> {
             angX.set(anchAngX - (anchY - event.getSceneY()));
           angY.set(anchAngY + (anchX - event.getSceneX()));
     });
@@ -74,45 +77,84 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
+
+
+        BorderPane root = new BorderPane();
+        GridPane gridPane = new GridPane();
+        Pane p = new Pane();
+        p.getStyleClass().add("pane");
+
+        VBox vbox = new VBox();
+        vbox.getStyleClass().add("vbox");
+        gridPane.getStyleClass().addAll("gridpane","grid");
+
         Sphere s = new Sphere(RADIUS);
         Group group = new Group(); // root group class
-        RotatingGroup rg = new RotatingGroup(); // my class with rotating feature
-        rg.getChildren().add(s);
-        group.getChildren().add(rg);
-
-        Camera camera = new PerspectiveCamera(true);
-        Scene scene = new Scene(group, WIDTH, HEIGHT);
-        scene.setFill(Color.GREY);
-        scene.setCamera(new PerspectiveCamera());
-
-        rg.translateXProperty().set(WIDTH/2);
-        rg.translateYProperty().set(HEIGHT/2);
-        rg.translateZProperty().set(400);
-
+        gridPane.getChildren().add(p);
+        group.getChildren().add(s);
+        GridPane.setConstraints(p, 0, 1);
+        p.getChildren().add(group);
 
         PhongMaterial mat = new PhongMaterial();
         AtomicInteger imgNr = new AtomicInteger(1);
-        final String path = NASA_IMG_PATH+Integer.toString(imgNr.get())+".png";
-        Image map = new Image(getClass().getResourceAsStream(TEST));
-        mat.setDiffuseMap(map);;
+        final String pathLegit = NASA_IMG_PATH_LEGIT+Integer.toString(imgNr.get())+".png";
+        final String pathSim = NASA_IMG_PATH_SIM+Integer.toString(imgNr.get())+".png";
+
+        ImageHolder imgHolderL = new ImageHolder(pathLegit);
+        ImageHolder imgHolderS = new ImageHolder(pathSim);
+        imgHolderL.setImage(new Image(getClass().getResourceAsStream(pathLegit)));
+        imgHolderS.setImage(new Image(getClass().getResourceAsStream(pathSim)));
+        ImageView legitImg = new ImageView();
+        legitImg.setImage(imgHolderL.getImg());
+        ImageView simImg = new ImageView();
+        simImg.setImage(imgHolderS.getImg());
+        gridPane.getChildren().addAll(legitImg,simImg);
+        GridPane.setConstraints(legitImg,1,0);
+        GridPane.setConstraints(simImg,0,0);
+
+        Camera camera = new PerspectiveCamera(true);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        scene.getStylesheets().add("src/main/javafxstyles.css");
+        scene.setFill(Color.GREY);
+        scene.setCamera(new PerspectiveCamera());
+
+        root.setCenter(gridPane);
+        root.setRight(vbox);
+
+        group.translateXProperty().set(70);
+        group.translateYProperty().set(180);
+        group.translateZProperty().set(500);
+
+        mat.setDiffuseMap(imgHolderL.getImg());
         s.setMaterial(mat);
 
-        initMouseControl(rg,scene);
+        initMouseControl(group);
         primaryStage.addEventHandler(KeyEvent.KEY_PRESSED,keyEvent -> {
             switch(keyEvent.getCode()) {
-                case LEFT:
-                    if (imgNr.get()>1) {
+                case A:
+                    if (imgNr.get() > 1) {
                         imgNr.getAndDecrement();
-                        mat.setDiffuseMap(new Image(getClass().getResourceAsStream(NASA_IMG_PATH + Integer.toString(imgNr.get()) + ".png")));
+                        //map = new Image(getClass().getResourceAsStream(NASA_IMG_PATH + Integer.toString(imgNr.get()) + ".png"));
+                        imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT + Integer.toString(imgNr.get()) + ".png")));
+                        imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + Integer.toString(imgNr.get()) + ".png")));
+                        //mat.setDiffuseMap(new Image(getClass().getResourceAsStream(NASA_IMG_PATH + Integer.toString(imgNr.get()) + ".png")));
+                        mat.setDiffuseMap(imgHolderL.getImg());
+                        legitImg.setImage(imgHolderL.getImg());
+                        simImg.setImage(imgHolderS.getImg());
                     }
                     break;
-                case RIGHT:
-                    if(imgNr.get()<364) {
+                case D:
+                    if (imgNr.get() < 362) {
                         imgNr.getAndIncrement();
-                        mat.setDiffuseMap(new Image(getClass().getResourceAsStream(NASA_IMG_PATH+Integer.toString(imgNr.get())+".png")));
+                        //map = new Image(getClass().getResourceAsStream(NASA_IMG_PATH + Integer.toString(imgNr.get()) + ".png"));
+                        imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT + Integer.toString(imgNr.get()) + ".png")));
+                        imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + Integer.toString(imgNr.get()) + ".png")));
+                        //mat.setDiffuseMap(new Image(getClass().getResourceAsStream(NASA_IMG_PATH + Integer.toString(imgNr.get()) + ".png")));
+                        mat.setDiffuseMap(imgHolderL.getImg());
+                        legitImg.setImage(imgHolderL.getImg());
+                        simImg.setImage(imgHolderS.getImg());
                     }
                     break;
-
             }
         });
         primaryStage.setTitle("sdsz");

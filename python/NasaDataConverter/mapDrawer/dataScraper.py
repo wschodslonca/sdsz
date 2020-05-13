@@ -1,8 +1,21 @@
-class DataScrapper:
-    def __init__(self,file):
+class DataScraper:
+    def __init__(self, path=''):
         self.lat = 180
-        self.long = 288
-        self.file = file
+        self.long = 360
+        self.path = path
+        self.file = None
+        if path!='':
+            self.setLongLat()
+
+    def setLongLat(self):
+        self.file = open(self.path,'r')
+        str = self.file.read()
+        longStart = str.find('Longitudes:  ')+13
+        self.long = int(str[longStart:longStart+3])
+        latStart = str.find('Latitudes :  ')+13
+        self.lat = int(str[latStart:latStart+3])
+        self.file.close()
+
 
     def getDuValues(self):
         def delSpaces(str,step):
@@ -30,12 +43,9 @@ class DataScrapper:
 
         #244 903
 
-        file = open(self.file,'r')
-        str = file.read()
-        longStart = str.find('Longitudes:  ')+13
-        self.long = int(str[longStart:longStart+3])
-        latStart = str.find('Latitudes :  ')+13
-        self.lat = int(str[latStart:latStart+3])
+        self.file = open(self.path, 'r')
+        str = self.file.read()
+        self.file.close()
         #startIn = str.find('N  (1.00 degree steps)')+26
 
         start = ind["start"]
@@ -131,3 +141,6 @@ class DataScrapper:
 
     def nasaDataToRgb(self):
         return self.duToRgb(self.getDuValues())
+
+    def nasaDataToRgbByValues(self,values):
+        return self.duToRgb(values)
