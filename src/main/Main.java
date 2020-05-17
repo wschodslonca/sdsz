@@ -122,7 +122,7 @@ public class Main extends Application {
 
         Camera camera = new PerspectiveCamera(true);
         Scene scene = new Scene(root, WIDTH, HEIGHT);
-        scene.getStylesheets().add("src/main/javafxstyles.css");
+        scene.getStylesheets().add("main/javafxstyles.css");
         scene.setFill(Color.GREY);
         scene.setCamera(new PerspectiveCamera());
 
