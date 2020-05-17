@@ -1,27 +1,33 @@
 from mapDrawer.dataScraper import DataScraper
 from PIL import Image
+import os
 
-ALPHA = 255
-
-def convertToPng(scraper, fileTo):
+def convertToPng(scraper, fileTo, listx=None, datax=None,alphax=255):
     scr = scraper
-    data = scr.nasaDataToRgb()
+    if datax is not None:
+        data = datax
+    else:
+        if listx is not None:
+            data = scr.nasaDataToRgbByValues(listx)
+        else:
+            data = scr.nasaDataToRgb()
     img = Image.new('RGB', (scr.long, scr.lat))
     img.putdata(data)
     try:
-        img.putalpha(ALPHA)
+        img.putalpha(alphax)
     except:
         print('failure...')
 
     bg = None
-    if scr.long==288:
-        bg = Image.open("mapDrawer/img/earth288.png")
-    elif scr.long==360:
-        bg = Image.open("mapDrawer/img/earth360.png")
+    if scr.long == 288:
+        bg = Image.open(os.path.join(__file__,'..','img/earth288.png'))
+    elif scr.long == 360:
+        bg = Image.open(os.path.join(__file__,'..','img/earth360.png'))
 
     bg.paste(img, (0, 0), img)
     bg.save(fileTo)
     print('success!')
+
 
 def convertToPngByFile(fileFrom,fileTo):
     scraper = DataScraper(fileFrom)
@@ -29,7 +35,7 @@ def convertToPngByFile(fileFrom,fileTo):
     img = Image.new('RGB',(scraper.long,scraper.lat))
     img.putdata(data)
     try:
-        img.putalpha(ALPHA)
+        img.putalpha(255)
     except:
         print('failure...')
 
@@ -42,24 +48,3 @@ def convertToPngByFile(fileFrom,fileTo):
     bg.paste(img, (0, 0), img)
     bg.save(fileTo)
     print('success!')
-
-def convertToPngByList(l,fileTo):
-    scraper = DataScraper()
-    data = scraper.nasaDataToRgbByValues(l)
-    img = Image.new('RGB', (scraper.long, scraper.lat))
-    img.putdata(data)
-    try:
-        img.putalpha(ALPHA)
-    except:
-        print('failure...')
-
-    bg = None
-    if scraper.long == 288:
-        bg = Image.open("mapDrawer/img/earth288.png")
-    elif scraper.long == 360:
-        bg = Image.open("mapDrawer/img/earth360.png")
-
-    bg.paste(img, (0, 0), img)
-    bg.save(fileTo)
-    print('success!')
-

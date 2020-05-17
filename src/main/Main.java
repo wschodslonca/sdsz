@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.*;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -40,7 +41,7 @@ public class Main extends Application {
     private static final String EARTH_MAP_IMG = "/resources/img/earthMap.jpg";
     private static final String TEST = "/resources/img/earth288.png";
     private static final String NASA_IMG_PATH_LEGIT = "/resources/img/nasa/"+YEARL+"/";
-    private static final String NASA_IMG_PATH_SIM = "/resources/img/nasa/"+YEARS+"/";
+    private static final String NASA_IMG_PATH_SIM = "/resources/img/sim/"+YEARS+"/";
 
     private static final int RADIUS = 180;
     private static final int WIDTH = 1024;
@@ -140,6 +141,7 @@ public class Main extends Application {
         primaryStage.addEventHandler(KeyEvent.KEY_PRESSED,keyEvent -> {
             switch(keyEvent.getCode()) {
                 case A:
+                case LEFT:
                     if (imgNr.get() > 1) {
                         imgNr.getAndDecrement();
                         imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT +fileL[imgNr.get()].getName())));
@@ -150,6 +152,7 @@ public class Main extends Application {
                     }
                     break;
                 case D:
+                case RIGHT:
                     if (imgNr.get() < fileL.length-1) {
                         imgNr.getAndIncrement();
                         imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT + fileL[imgNr.get()].getName())));

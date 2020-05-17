@@ -1,5 +1,5 @@
 from mapDrawer.dataScraper import DataScraper
-from mapDrawer.drawer import convertToPngByList
+from mapDrawer.drawer import convertToPng
 import os
 import time
 import random
@@ -33,7 +33,7 @@ for days in range(1,365+1):
             #next[i].append(cur[i][j]+random.randrange(-2,2))
 
     topath = f"../../src/resources/img/sim/{YEAR}/{days}.png"
-    convertToPngByList(cur, topath)
+    convertToPng(scraper, topath,cur)
     cur.clear()
     cur=next.copy()
     next.clear()
