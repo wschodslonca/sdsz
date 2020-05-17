@@ -1,20 +1,42 @@
 class DataScraper:
-    def __init__(self, path=''):
-        self.lat = 180
-        self.long = 360
+    def __init__(self, path='', lat=180, long=360):
+        self.lat = lat
+        self.long = long
         self.path = path
         self.file = None
+        self.date = ''
+        self.data = None
         if path!='':
-            self.setLongLat()
+            try:
+                self.file = open(path,'r')
+                self.data = self.file.read()
+            finally:
+                self.file.close()
+            self.setLongLatDate()
 
-    def setLongLat(self):
-        self.file = open(self.path,'r')
-        str = self.file.read()
-        longStart = str.find('Longitudes:  ')+13
-        self.long = int(str[longStart:longStart+3])
-        latStart = str.find('Latitudes :  ')+13
-        self.lat = int(str[latStart:latStart+3])
+    def setDate(self,date):
+        try:
+            ret=''
+            ret += self.monthToNumber(date[0:3])
+            if date[4]==' ':
+                ret+='0'+date[5]
+            else: ret+=date[4:6]
+            ret+=date[8:12]
+            return ret
+        except:
+            return "Err#r"
+
+    def setLongLatDate(self):
+        #self.file = open(self.path,'r')
+        #str = self.file.read()
+        self.date = self.setDate(self.data[10:22])
+        print(self.date)
+        longStart = self.data.find('Longitudes:  ')+13
+        self.long = int(self.data[longStart:longStart+3])
+        latStart = self.data.find('Latitudes :  ')+13
+        self.lat = int(self.data[latStart:latStart+3])
         self.file.close()
+
 
 
     def getDuValues(self):
@@ -43,9 +65,6 @@ class DataScraper:
 
         #244 903
 
-        self.file = open(self.path, 'r')
-        str = self.file.read()
-        self.file.close()
         #startIn = str.find('N  (1.00 degree steps)')+26
 
         start = ind["start"]
@@ -64,7 +83,7 @@ class DataScraper:
             values = []
             startIn = start+i*step
             stop = startIn + stepStop
-            rawStr = str[startIn:stop].replace("\n","")
+            rawStr = self.data[startIn:stop].replace("\n","")
             rawStr = delSpaces(rawStr,75)
             for j in range(self.long):
                 values.append(int(rawStr[j*3:j*3+3].strip()))
@@ -144,3 +163,31 @@ class DataScraper:
 
     def nasaDataToRgbByValues(self,values):
         return self.duToRgb(values)
+
+    def monthToNumber(self,month):
+        if month=='Jan':
+            return '01'
+        elif month=='Feb':
+            return '02'
+        elif month=='Mar':
+            return '03'
+        elif month=='Apr':
+            return '04'
+        elif month=='May':
+            return '05'
+        elif month=='Jun':
+            return '06'
+        elif month=='Jul':
+            return '07'
+        elif month=='Aug':
+            return '08'
+        elif month=='Sep':
+            return '09'
+        elif month=='Oct':
+            return '10'
+        elif month=='Nov':
+            return '11'
+        elif month=='Dec':
+            return '12'
+        else:
+            return '-1'

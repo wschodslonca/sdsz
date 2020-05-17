@@ -1,7 +1,7 @@
-from mapDrawer.drawer import convertToPng
+from mapDrawer.drawer import convertToPngByFile
 
 FROMPATH = 'resources/data/test/from/from.txt'
-TOPATH = 'resources/data/test/to/to.png'
+TOPATH = 'resources/data/test/to/'
 
-convertToPng(FROMPATH,TOPATH)
+convertToPngByFile(FROMPATH,TOPATH)
 

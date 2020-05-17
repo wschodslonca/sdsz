@@ -15,7 +15,7 @@ for dirpath, dirnames, filenames in os.walk(f"resources/data/texts/{YEAR}"):
     for i in filenames:
         g+=1
         frompath = os.path.join(dirpath, i)
-        topath = f"resources/data/test/{YEAR}/{g}.txt"
+        topath = f"resources/data/test/{YEAR}/{g}.png"
         try:
             if(g==1):
                 scraper = DataScraper(frompath)

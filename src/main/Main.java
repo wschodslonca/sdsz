@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import java.lang.String;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -7,7 +8,6 @@ import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.*;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -34,7 +34,7 @@ public class Main extends Application {
 
 
     private static final int YEARL = 2005; // year of legit data
-    private static final int YEARS = 2006; // year of simulated data
+    private static final int YEARS = 2005; // year of simulated data
     //imgs
 
     private static final String EARTH_MAP_IMG = "/resources/img/earthMap.jpg";
@@ -97,8 +97,16 @@ public class Main extends Application {
 
         PhongMaterial mat = new PhongMaterial();
         AtomicInteger imgNr = new AtomicInteger(1);
-        final String pathLegit = NASA_IMG_PATH_LEGIT+Integer.toString(imgNr.get())+".png";
-        final String pathSim = NASA_IMG_PATH_SIM+Integer.toString(imgNr.get())+".png";
+
+        File[] fileL = new File(getClass().getResource(NASA_IMG_PATH_LEGIT).getPath()).listFiles();
+        for (File f: fileL) {
+            System.out.println(f.getName());
+        }
+
+        final String pathLegit = NASA_IMG_PATH_LEGIT+fileL[0].getName();
+        final String pathSim = NASA_IMG_PATH_SIM+fileL[0].getName();
+
+
 
         ImageHolder imgHolderL = new ImageHolder(pathLegit);
         ImageHolder imgHolderS = new ImageHolder(pathSim);
@@ -134,22 +142,18 @@ public class Main extends Application {
                 case A:
                     if (imgNr.get() > 1) {
                         imgNr.getAndDecrement();
-                        //map = new Image(getClass().getResourceAsStream(NASA_IMG_PATH + Integer.toString(imgNr.get()) + ".png"));
-                        imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT + Integer.toString(imgNr.get()) + ".png")));
-                        imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + Integer.toString(imgNr.get()) + ".png")));
-                        //mat.setDiffuseMap(new Image(getClass().getResourceAsStream(NASA_IMG_PATH + Integer.toString(imgNr.get()) + ".png")));
+                        imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT +fileL[imgNr.get()].getName())));
+                        imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + fileL[imgNr.get()].getName())));
                         mat.setDiffuseMap(imgHolderL.getImg());
                         legitImg.setImage(imgHolderL.getImg());
                         simImg.setImage(imgHolderS.getImg());
                     }
                     break;
                 case D:
-                    if (imgNr.get() < 362) {
+                    if (imgNr.get() < fileL.length-1) {
                         imgNr.getAndIncrement();
-                        //map = new Image(getClass().getResourceAsStream(NASA_IMG_PATH + Integer.toString(imgNr.get()) + ".png"));
-                        imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT + Integer.toString(imgNr.get()) + ".png")));
-                        imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + Integer.toString(imgNr.get()) + ".png")));
-                        //mat.setDiffuseMap(new Image(getClass().getResourceAsStream(NASA_IMG_PATH + Integer.toString(imgNr.get()) + ".png")));
+                        imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT + fileL[imgNr.get()].getName())));
+                        imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + fileL[imgNr.get()].getName())));
                         mat.setDiffuseMap(imgHolderL.getImg());
                         legitImg.setImage(imgHolderL.getImg());
                         simImg.setImage(imgHolderS.getImg());
