@@ -1,4 +1,4 @@
-from mapDrawer.dataScraper import DataScraper
+from mapDrawer.datascraper import DataScraper
 from PIL import Image
 import os
 
@@ -27,7 +27,6 @@ def convertToPng(scraper, fileTo, listx=None, datax=None,alphax=255):
     bg.paste(img, (0, 0), img)
     bg.save(fileTo)
     print('success!')
-
 
 def convertToPngByFile(fileFrom,fileTo):
     scraper = DataScraper(fileFrom)

@@ -1,31 +1,37 @@
 from mapDrawer.drawer import convertToPng
-from mapDrawer.dataScraper import DataScraper
+from mapDrawer.datascraper import DataScraper
 import os
 import time
 
+year = int(input("type year to convert: "))
 
-#YEAR = 2005
+todir = f"../../src/resources/img/nasa/{year}/"
+fromdir = f"resources/data/texts/{year}/"
 
-#-180 = W 180 = N
+if os.path.exists(fromdir):
+    if not os.path.exists(todir):
+        try:
+            os.mkdir(todir)
+        except:
+            print("unable to create dir")
+            exit(-1)
+else:
+    print(f"no data in year {year}")
+    exit(-1)
 
-#convertToPng("resources/L3_ozone_omi_20060717.txt","../../src/resources/img/pythonEarth.png")
-#convertToPng("resources/L3_ozone_omi_20060717.txt","resources/imgs/imgg.png")
-start = time.time();
-for YEAR in range (1978, 2005):
-    todir = f"../../src/resources/img/nasa/{YEAR}/"
+start = time.time()
+g = 1
+for dirpath, dirnames, filenames in os.walk(f"resources/data/texts/{year}"):
+    filenames.sort()
+    for i in filenames:
+        frompath = os.path.join(dirpath,i)
+        try:
+            scraper = DataScraper(frompath)
+            topath = todir+scraper.date+'.png'
+            convertToPng(scraper,topath)
+        except:
+            print("unable to convert")
+        g+=1
 
-    g = 1
-    for dirpath, dirnames, filenames in os.walk(f"resources/data/texts/{YEAR}"):
-        filenames.sort()
-        for i in filenames:
-            frompath = os.path.join(dirpath,i)
-            try:
-                scraper = DataScraper(frompath)
-                topath = todir+scraper.date+'.png'
-                convertToPng(scraper,topath)
-            except:
-                print("unable to convert")
-            g+=1
-
-    end = time.time()
-    print(end-start)
+end = time.time()
+print(end-start)
