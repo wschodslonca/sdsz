@@ -3,7 +3,6 @@ package main;
 import java.io.File;
 import java.lang.String;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -34,14 +33,14 @@ public class Main extends Application {
     }
 
 
-    private static final int YEARL = 2005; // year of legit data
-    private static final int YEARS = 2005; // year of simulated data
+    private static final int YEARL = 1985; // year of legit data
+    private static final int YEARS = 1985; // year of simulated data
     //imgs
 
     private static final String EARTH_MAP_IMG = "/resources/img/earthMap.jpg";
     private static final String TEST = "/resources/img/earth288.png";
     private static final String NASA_IMG_PATH_LEGIT = "/resources/img/nasa/"+YEARL+"/";
-    private static final String NASA_IMG_PATH_SIM = "/resources/img/sim/"+YEARS+"/";
+    private static final String NASA_IMG_PATH_SIM = "/resources/img/nasa/"+YEARS+"/";
 
     private static final int RADIUS = 180;
     private static final int WIDTH = 1024;
@@ -97,7 +96,7 @@ public class Main extends Application {
         p.getChildren().add(group);
 
         PhongMaterial mat = new PhongMaterial();
-        AtomicInteger imgNr = new AtomicInteger(1);
+        AtomicInteger imgNr = new AtomicInteger(0);
 
         File[] fileL = new File(getClass().getResource(NASA_IMG_PATH_LEGIT).getPath()).listFiles();
         for (File f: fileL) {
@@ -120,6 +119,7 @@ public class Main extends Application {
         gridPane.getChildren().addAll(legitImg,simImg);
         GridPane.setConstraints(legitImg,1,0);
         GridPane.setConstraints(simImg,0,0);
+        vbox.getChildren().add(new Label(fileL[imgNr.get()].getName()));
 
         Camera camera = new PerspectiveCamera(true);
         Scene scene = new Scene(root, WIDTH, HEIGHT);
@@ -142,24 +142,28 @@ public class Main extends Application {
             switch(keyEvent.getCode()) {
                 case A:
                 case LEFT:
-                    if (imgNr.get() > 1) {
+                    if (imgNr.get() > 0) {
+                        vbox.getChildren().clear();
                         imgNr.getAndDecrement();
                         imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT +fileL[imgNr.get()].getName())));
                         imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + fileL[imgNr.get()].getName())));
                         mat.setDiffuseMap(imgHolderL.getImg());
                         legitImg.setImage(imgHolderL.getImg());
                         simImg.setImage(imgHolderS.getImg());
+                        vbox.getChildren().add(new Label(fileL[imgNr.get()].getName()));
                     }
                     break;
                 case D:
                 case RIGHT:
                     if (imgNr.get() < fileL.length-1) {
+                        vbox.getChildren().clear();
                         imgNr.getAndIncrement();
                         imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT + fileL[imgNr.get()].getName())));
                         imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + fileL[imgNr.get()].getName())));
                         mat.setDiffuseMap(imgHolderL.getImg());
                         legitImg.setImage(imgHolderL.getImg());
                         simImg.setImage(imgHolderS.getImg());
+                        vbox.getChildren().add(new Label(fileL[imgNr.get()].getName()));
                     }
                     break;
             }

@@ -4,28 +4,28 @@ import os
 import time
 
 
-YEAR = 2005
+#YEAR = 2005
 
 #-180 = W 180 = N
 
 #convertToPng("resources/L3_ozone_omi_20060717.txt","../../src/resources/img/pythonEarth.png")
 #convertToPng("resources/L3_ozone_omi_20060717.txt","resources/imgs/imgg.png")
+start = time.time();
+for YEAR in range (1978, 2005):
+    todir = f"../../src/resources/img/nasa/{YEAR}/"
 
-todir = f"../../src/resources/img/nasa/{YEAR}/"
+    g = 1
+    for dirpath, dirnames, filenames in os.walk(f"resources/data/texts/{YEAR}"):
+        filenames.sort()
+        for i in filenames:
+            frompath = os.path.join(dirpath,i)
+            try:
+                scraper = DataScraper(frompath)
+                topath = todir+scraper.date+'.png'
+                convertToPng(scraper,topath)
+            except:
+                print("unable to convert")
+            g+=1
 
-start = time.time()
-g = 1
-for dirpath, dirnames, filenames in os.walk(f"resources/data/texts/{YEAR}"):
-    filenames.sort()
-    for i in filenames:
-        frompath = os.path.join(dirpath,i)
-        try:
-            scraper = DataScraper(frompath)
-            topath = todir+scraper.date+'.png'
-            convertToPng(scraper,topath)
-        except:
-            print("unable to convert")
-        g+=1
-
-end = time.time()
-print(end-start)
+    end = time.time()
+    print(end-start)
