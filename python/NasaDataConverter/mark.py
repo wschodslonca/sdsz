@@ -36,8 +36,8 @@ for dirpath, dirnames, filenames in os.walk(fromdir):
         try:
             scraper = DataScraper(frompath)
             topath = todir+scraper.date+'.png'
-            print(topath)
             new = mark(scraper)
+
             convertToPng(scraper,topath,None,new)
         except:
             print("unable to convert")

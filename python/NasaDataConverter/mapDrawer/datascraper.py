@@ -27,15 +27,14 @@ class DataScraper:
             return "Err#r"
 
     def setLongLatDate(self):
-        #self.file = open(self.path,'r')
-        #str = self.file.read()
         self.date = self.setDate(self.data[10:22])
-        print(self.date)
         longStart = self.data.find('Longitudes:  ')+13
         self.long = int(self.data[longStart:longStart+3])
         latStart = self.data.find('Latitudes :  ')+13
         self.lat = int(self.data[latStart:latStart+3])
         self.file.close()
+
+        # print(self.date)
 
 
 
