@@ -1,5 +1,3 @@
-from mapDrawer.dataScraper import DataScraper
-
 def list1d(list):
     new = []
     for i in list:
@@ -27,12 +25,13 @@ def move(lat,long,x,y,dir):
         x-=1
     return x,y
 
-###### no ta przeciez to nie bedzie dwuwymariowe
-
-
-def mark(scraper,lat=180,long=360):
+def mark(scraper,map = None):
+    lat = scraper.lat
+    long = scraper.long
     new = initEmpty(lat,long)
-    mapp = scraper.getDuValues()
+    mapp=None
+    if map is None: mapp = scraper.getDuValues()
+    else: mapp = map
     ##### width
     for i in range(lat):
         last = scraper.duToRgb(mapp[i][0])
