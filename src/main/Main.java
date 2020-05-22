@@ -1,5 +1,4 @@
 package main;
-
 import java.io.File;
 import java.lang.String;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -70,9 +69,9 @@ public class Main extends Application {
 
         g.setOnMouseDragged(event -> {
             angX.set(anchAngX - (anchY - event.getSceneY()));
-          angY.set(anchAngY + (anchX - event.getSceneX()));
-    });
-}
+            angY.set(anchAngY + (anchX - event.getSceneX()));
+        });
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -102,7 +101,6 @@ public class Main extends Application {
         for (File f: fileL) {
             System.out.println(f.getName());
         }
-
         final String pathLegit = NASA_IMG_PATH_LEGIT+fileL[0].getName();
         final String pathSim = NASA_IMG_PATH_SIM+fileL[0].getName();
 
@@ -119,7 +117,8 @@ public class Main extends Application {
         gridPane.getChildren().addAll(legitImg,simImg);
         GridPane.setConstraints(legitImg,1,0);
         GridPane.setConstraints(simImg,0,0);
-        vbox.getChildren().add(new Label(fileL[imgNr.get()].getName()));
+        Label fileName = new Label(fileL[imgNr.get()].getName());
+        vbox.getChildren().add(fileName);
 
         Camera camera = new PerspectiveCamera(true);
         Scene scene = new Scene(root, WIDTH, HEIGHT);
@@ -143,27 +142,26 @@ public class Main extends Application {
                 case A:
                 case LEFT:
                     if (imgNr.get() > 0) {
-                        vbox.getChildren().clear();
                         imgNr.getAndDecrement();
                         imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT +fileL[imgNr.get()].getName())));
                         imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + fileL[imgNr.get()].getName())));
                         mat.setDiffuseMap(imgHolderL.getImg());
                         legitImg.setImage(imgHolderL.getImg());
                         simImg.setImage(imgHolderS.getImg());
-                        vbox.getChildren().add(new Label(fileL[imgNr.get()].getName()));
+                        fileName.setText(fileL[imgNr.get()].getName());
                     }
                     break;
                 case D:
                 case RIGHT:
                     if (imgNr.get() < fileL.length-1) {
-                        vbox.getChildren().clear();
+                        //vbox.getChildren().clear();
                         imgNr.getAndIncrement();
                         imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT + fileL[imgNr.get()].getName())));
                         imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + fileL[imgNr.get()].getName())));
                         mat.setDiffuseMap(imgHolderL.getImg());
                         legitImg.setImage(imgHolderL.getImg());
                         simImg.setImage(imgHolderS.getImg());
-                        vbox.getChildren().add(new Label(fileL[imgNr.get()].getName()));
+                        fileName.setText(fileL[imgNr.get()].getName());
                     }
                     break;
             }
