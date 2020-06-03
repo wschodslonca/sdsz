@@ -2,7 +2,7 @@ from mapDrawer.datascraper import DataScraper
 from PIL import Image
 import os
 
-def convertToPng(scraper, fileTo, listx=None, datax=None,alphax=255):
+def convertToPng(fileTo, scraper=DataScraper(), listx=None, datax=None,alphax=255):
     scr = scraper
     if datax is not None:
         data = datax

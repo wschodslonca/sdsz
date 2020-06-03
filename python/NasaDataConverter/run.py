@@ -28,7 +28,7 @@ for dirpath, dirnames, filenames in os.walk(f"resources/data/texts/{year}"):
         try:
             scraper = DataScraper(frompath)
             topath = todir+scraper.date+'.png'
-            convertToPng(scraper,topath)
+            convertToPng(topath,scraper)
         except:
             print("unable to convert")
         g+=1

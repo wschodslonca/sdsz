@@ -50,7 +50,7 @@ def mark(scraper,map = None):
                 if i>0:new[i-1][j]=last
                 new[i][j]=val
                 last = val
-    return list1d(new)
+    return new
 
 
 

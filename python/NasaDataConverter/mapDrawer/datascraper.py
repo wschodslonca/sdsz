@@ -1,5 +1,5 @@
 class DataScraper:
-    def __init__(self, path='', lat=180, long=360):
+    def __init__(self, path='', lat=180, long=288):
         self.lat = lat
         self.long = long
         self.path = path

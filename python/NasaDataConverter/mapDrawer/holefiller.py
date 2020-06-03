@@ -80,7 +80,7 @@ def holefiller(year):
             listo = todir+'data/'+scr.date+'.txt'
             print(listo)
             listToFile(map,listo)
-            convertToPng(scr,fileto,map)
+            convertToPng(fileto,scr,map)
         except:
             print(f"{i}: holefiller error")
 

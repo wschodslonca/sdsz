@@ -1,5 +1,5 @@
 from mapDrawer.datascraper import DataScraper
-from areaMarker.areamarker import mark
+from areaMarker.areamarker import mark,list1d
 from mapDrawer.drawer import *
 import os
 import time
@@ -8,7 +8,7 @@ import time
 # pathto = '../resources/data/test/to/test.png'
 # scraper = DataScraper(pathfrom)
 # new = mark(scraper)
-# convertToPng(scraper,pathto,None,new)
+# convertToPng(pathto,scraper,None,new)
 
 year = int(input("type year to convert: "))
 
@@ -36,9 +36,10 @@ for dirpath, dirnames, filenames in os.walk(fromdir):
         try:
             scraper = DataScraper(frompath)
             topath = todir+scraper.date+'.png'
-            new = mark(scraper)
+            temp = mark(scraper)
+            new = list1d(temp)
 
-            convertToPng(scraper,topath,None,new)
+            convertToPng(topath,scraper,None,new)
         except:
             print("unable to convert")
         g+=1
