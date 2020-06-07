@@ -1,10 +1,14 @@
-from mapDrawer.holefiller import holefiller
+from markdrawers.holefiller import holefiller
 import time
 
-start =time.time()
 
-year = int(input("select year: "))
-holefiller(year)
+def main():
+    start = time.time()
+    year = int(input("select year: "))
+    holefiller(year)
+    end = time.time()
+    print(end - start)
 
-end=time.time()
-print(end-start)
+
+if __name__ == '__main__':
+    main()
