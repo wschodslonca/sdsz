@@ -21,7 +21,8 @@ def main():
     pixels = 6
     # queue = [(51,153,255),(0,102,204),(0,0,102)]
     queue = [(51, 153, 255), (0, 102, 204), (0, 0, 102), (0, 0, 204), (51, 51, 255), (102, 0, 204)]
-    stfrom = 100
+    stfromdown = 100
+    endonup = 60
 
     start = time.time()
     data = filetolist(path)
@@ -29,7 +30,7 @@ def main():
     arealist = filetolist(patharea)
     for cl in queue:
         print(cl)
-        move(data, arealist, pattern.copy(), pixels, cl, stfrom=stfrom)
+        move(data, arealist, pattern.copy(), pixels, cl, stfrom=stfromdown)
     converttopng(pathtest, listx=data)
 
     # tests

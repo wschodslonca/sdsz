@@ -9,6 +9,14 @@ def mincolor(listx):
                 min = j
     return min
 
+def maxcolor(listx):
+    max = 1
+    for i in listx:
+        for j in i:
+            if j>max:
+                max = j
+    return max
+
 
 def datetoint(date):
     day = None
@@ -150,7 +158,7 @@ def rgbtodu(j):
         return 0
 
 
-def round(j):
+def rround(j):
     if j == 0:  # brak danych
         return 0
     elif j > 0 and j < 25:
@@ -252,3 +260,19 @@ def dutorgblist(list):
 
 def nasadatatorgbbyvalues(values):
     return dutorgblist(values)
+
+def grabdatabyear(listx,year):
+    ant=-1
+    arc=-1
+    glob=-1
+    for i in range(len(listx)):
+        for j in range(len(listx[i])):
+            if listx[i][j][0]==year:
+                if i==0:
+                    ant=listx[i][j][1]
+                elif i==1:
+                    arc=listx[i][j][1]
+                elif i==2:
+                    glob=listx[i][j][1]
+    return ant,arc,glob
+

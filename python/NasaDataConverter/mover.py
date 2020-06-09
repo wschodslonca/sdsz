@@ -1,5 +1,5 @@
 from presuveres.presuve import move
-from presuveres.color import color
+from presuveres.color import color,delthebiggest
 from markdrawers.lister import *
 from markdrawers.drawer import converttopng
 from copy import deepcopy
@@ -9,7 +9,7 @@ from sets.func import *
 
 
 def main():
-    simyear = 2000  # year to simulate
+    simyear = 2001  # year to simulate
     pixels = 5  # pixels to move
     queue = [(51, 153, 255), (0, 102, 204), (0, 0, 102), (0, 0, 204), (51, 51, 255),
              (102, 0, 204)]  # colors to consider while moving
@@ -62,8 +62,6 @@ def main():
                 arealist = filetolist(patharea)
                 for cl in queue:
                     move(data, arealist, pattern.copy(), pixels, cl, stfrom=stfrom)
-                color(data,3)
-                color(data,3)
                 converttopng(pathsim, listx=data)
                 if interupt:
                     break
