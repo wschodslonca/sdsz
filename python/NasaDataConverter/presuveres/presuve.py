@@ -1,14 +1,51 @@
 from sets.func import *
 
+def move(listx, pattern, color, pixels=0,arealist=None,stfrom=0, endon=180):
+    if pixels>0:
+        moveup(listx, pattern, color, pixels, arealist,  stfrom, endon)
+    elif pixels<0:
+        movedown(listx, pattern, color , stfrom=stfrom,endon=endon)
 
-def move(listx, arealist, pattern, pixels, color, stfrom=0, endon=180):  # arealist - rgb format
+def movedown(listx, pattern, color, stfrom, endon):
+    hei = len(listx)
+    wid = len(listx[0])
+    approcolor = rround(color)
+    for i in range(stfrom,endon):
+        for j in range(wid):
+            if rround(pattern[i][j]) == approcolor:
+                clrchange = approcolor
+                for d in range(4): # 4 directions
+                    ti = i
+                    tj = j
+                    if d==0:
+                        tj-=1
+                    elif d==1:
+                        ti-=1
+                    elif d==2:
+                        if tj+1>wid:
+                            tj=0
+                        else:
+                            tj+=1
+                    else:
+                        if ti+1>hei:
+                            ti=0
+                        else:
+                            ti+=1
+                    if ti>=0 and ti<hei and tj>=0 and tj<wid:
+                        compcolor = pattern[ti][tj]
+                        if compcolor<approcolor and compcolor!=0:
+                            clrchange = compcolor
+                listx[i][j] = clrchange
+
+
+def moveup(listx, pattern, color, pixels, arealist, stfrom, endon):  # arealist - rgb format
     hei = len(arealist)
     wid = len(arealist[0])
     for i in range(stfrom, endon):
         for j in range(wid):
-            if round(pattern[i][j]) == rgbtodu(color):
+            if rround(pattern[i][j]) == rround(color):
                 listx[i][j] = pattern[i][j]
-            if arealist[i][j] == color:
+            if arealist[i][j] == dutorgb(color):
                 rgbval = arealist[i][j]
                 val = pattern[i][j]
                 listx[i][j] = val
