@@ -5,31 +5,31 @@ def mincolor(listx):
     min = MAXVALUE
     for i in listx:
         for j in i:
-            if j < min and j!=0:
+            if j < min and j != 0:
                 min = j
     return min
+
 
 def maxcolor(listx):
     max = 1
     for i in listx:
         for j in i:
-            if j>max:
+            if j > max:
                 max = j
     return max
 
 
 def datetoint(date):
-    day = None
     month = None
+    day = None
     year = None
-    if len(date) == 8:
-        try:
-            day = int(date[0:2])
-            month = int(date[2:4])
-            year = int(date[4:8])
-        except:
-            return (-1, -1, -1)
-    return (day, month, year)
+    try:
+        month = int(date[0:2])
+        day = int(date[2:4])
+        year = int(date[4:8])
+    except:
+        return (-1, -1, -1)
+    return (month, day, year)
 
 
 def dutorgb(j):
@@ -261,18 +261,18 @@ def dutorgblist(list):
 def nasadatatorgbbyvalues(values):
     return dutorgblist(values)
 
-def grabdatabyear(listx,year):
-    ant=-1
-    arc=-1
-    glob=-1
+
+def grabdatabyear(listx, year):
+    ant = -1
+    arc = -1
+    glob = -1
     for i in range(len(listx)):
         for j in range(len(listx[i])):
-            if listx[i][j][0]==year:
-                if i==0:
-                    ant=listx[i][j][1]
-                elif i==1:
-                    arc=listx[i][j][1]
-                elif i==2:
-                    glob=listx[i][j][1]
-    return ant,arc,glob
-
+            if listx[i][j][0] == year:
+                if i == 0:
+                    ant = listx[i][j][1]
+                elif i == 1:
+                    arc = listx[i][j][1]
+                elif i == 2:
+                    glob = listx[i][j][1]
+    return ant, arc, glob

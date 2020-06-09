@@ -16,7 +16,7 @@ def main():
     path = dir + tempfile + '.txt'
     patharea = dirarea + tempfile + '.txt'
     pathtest = dirtest + tempfile + '.png'
-    pathtestcolor = dirtest + tempfile+'clr' + '.png'
+    pathtestcolor = dirtest + tempfile + 'clr' + '.png'
 
     pixels = 6
     # queue = [(51,153,255),(0,102,204),(0,0,102)]
@@ -35,7 +35,7 @@ def main():
 
     # tests
     print('--------------\n')
-    color(data,5)
+    color(data, 5)
     print('\n---------------\n')
 
     converttopng(pathtestcolor, listx=data)

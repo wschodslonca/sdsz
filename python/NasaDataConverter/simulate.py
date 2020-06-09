@@ -8,7 +8,7 @@ import os
 from sets.func import *
 
 
-def main():
+def run(year=2006):
     # consts
     BASELOW = 145  # 124
     BASEUP = 595  # 604
@@ -18,7 +18,7 @@ def main():
 
     # info init
     concdata = filetolist('resources/data/ozone_concentration_data.txt')
-    simyear = 2020  # year to simulate
+    simyear = year  # year to simulate
     ant, arc, glob = grabdatabyear(concdata, simyear)
 
     colorup = int(arc / 3)
@@ -65,6 +65,8 @@ def main():
     for dirpath, dirnames, filenames in os.walk(dir):
         filenames.sort()
         for f in filenames:
+            onestart = time.time()
+            month, day, year = datetoint(f)
             f = f[0:8]
             if narrowdate:
                 tupi = datetoint(f)
@@ -75,28 +77,29 @@ def main():
                     if tupi[0] >= tupenddate[0] and tupi[1] >= tupenddate[1]:
                         interupt = True
             if godate:
-                print(f)
                 path = dir + f + '.txt'
                 patharea = dirarea + f + '.txt'
-                pathsim = dirsim + f + '.png'
+                pathsim = dirsim + f[0:2] + f[2:4] + str(simyear) + '.png'
+                print(pathsim)
                 data = filetolist(path)
                 pattern = deepcopy(data)
-                arealist = filetolist(patharea)
 
-                # antarctic
-                for cl in range(queuedownstart, queuedownend - 1, -25):
-                    move(data, pattern, cl, pixels, arealist, stfromdown, 180)
-                for i in range(colordown):
-                    inf = color(data, 3, COLORDOWNLIMIT, stfrom=stfromdown, endon=180)
-                    if inf == LIMITVAL:
-                        break
+                if day >= 1 and month >= 7:
+                    # antarctic
+                    arealist = filetolist(patharea)
+                    for cl in range(queuedownstart, queuedownend - 1, -25):
+                        move(data, pattern, cl, pixels, arealist, stfromdown, 180)
+                    for i in range(colordown):
+                        inf = color(data, 3, COLORDOWNLIMIT, stfrom=stfromdown, endon=180)
+                        if inf == LIMITVAL:
+                            break
 
                 # arctic
                 for i in range(colorup):
                     inf = delthebiggest(data, limit=COLORUPLIMIT)
                     if inf == LIMITVAL:
                         break
-                for clr in range(queueupstart, queueupend-1, -25):
+                for clr in range(queueupstart, queueupend - 1, -25):
                     for i in range(pixels):
                         move(data, pattern, clr, pixels=-1, stfrom=0, endon=endonup)
                         pattern = deepcopy(data)
@@ -105,10 +108,12 @@ def main():
                 converttopng(pathsim, listx=data)
                 if interupt:
                     break
+            oneend = time.time()
+            print(oneend - onestart)
 
     end = time.time()
     print(end - start)
 
 
 if __name__ == '__main__':
-    main()
+    run()

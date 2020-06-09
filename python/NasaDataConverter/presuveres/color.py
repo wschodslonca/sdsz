@@ -11,7 +11,7 @@ def color(listx, pixels, limit=0, stfrom=0, endon=180):
     if lowercolor < limit:
         return 4  # reached the limit
         pass
-    for i in range(stfrom,endon):
+    for i in range(stfrom, endon):
         for j in range(wid):
             if rround(pattern[i][j]) == currcolor:
                 if j - pixels >= 0 and j + pixels < wid and i - pixels >= 0 and i + pixels < hei:

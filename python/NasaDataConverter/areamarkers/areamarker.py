@@ -27,7 +27,7 @@ def move(lat, long, x, y, dir):
     return x, y
 
 
-def mark(scraper, map=None):
+def areamarker(scraper, map=None):
     lat = scraper.lat
     long = scraper.long
     new = initempty(lat, long)

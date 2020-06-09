@@ -1,6 +1,5 @@
 from markdrawers.lister import listtofile
 
-
 sourcedir = f"../resources/stratospheric-ozone-concentration-projections.csv"
 
 
@@ -21,7 +20,7 @@ def main():
 
             g += 2
             year = int(i[g:g + 4])
-            if year < 1985 or year > 2020: ##############
+            if year < 1985 or year > 2020:  ##############
                 continue
             value = float(i[g + 5:len(i)])
             temp[ind].append([year, value])
@@ -45,14 +44,14 @@ def main():
         for j in range(lenn):
             year = temp[i][j][0]
             currval = temp[i][j][1]
-            data[i].append([year, -1*round(currval,1)+0])
+            data[i].append([year, -1 * round(currval, 1) + 0])
             if j < lenn - 1:
                 nextval = temp[i][j + 1][1]
                 step = (nextval - currval) / 5
                 for k in range(1, 5):
-                    data[i].append([year + k, -1*round((currval + step * k), 1)+0])
+                    data[i].append([year + k, -1 * round((currval + step * k), 1) + 0])
 
-    listtofile(data,'../resources/data/ozone_concentration_data.txt')
+    listtofile(data, '../resources/data/ozone_concentration_data.txt')
 
 
 if __name__ == '__main__':

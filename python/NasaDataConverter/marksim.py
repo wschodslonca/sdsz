@@ -1,4 +1,4 @@
-from areamarkers.areamarker import mark, list1d
+from areamarkers.areamarker import areamarker, list1d
 from markdrawers.drawer import *
 from markdrawers.lister import *
 from markdrawers.datascraper import DataScraper
@@ -52,7 +52,7 @@ def main():
         try:
             topatharea = todirarea + i[0] + '.png'
             topathareadata = todirareadata + i[0] + '.txt'
-            temp = mark(scraper, i[1])  #####################
+            temp = areamarker(scraper, i[1])  #####################
             new = list1d(temp)
             converttopng(topatharea, scraper, None, new)
             listtofile(temp, topathareadata)

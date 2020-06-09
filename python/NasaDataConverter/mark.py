@@ -1,4 +1,4 @@
-from areamarkers.areamarker import mark, list1d
+from areamarkers.areamarker import areamarker, list1d
 from markdrawers.drawer import *
 import os
 import time
@@ -37,7 +37,7 @@ def main():
             try:
                 scraper = DataScraper(frompath)
                 topath = todir + scraper.date + '.png'
-                temp = mark(scraper)
+                temp = areamarker(scraper)
                 new = list1d(temp)
 
                 converttopng(topath, scraper, None, new)

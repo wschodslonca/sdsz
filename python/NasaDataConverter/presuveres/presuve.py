@@ -1,39 +1,41 @@
 from sets.func import *
 
-def move(listx, pattern, color, pixels=0,arealist=None,stfrom=0, endon=180):
-    if pixels>0:
-        moveup(listx, pattern, color, pixels, arealist,  stfrom, endon)
-    elif pixels<0:
-        movedown(listx, pattern, color , stfrom=stfrom,endon=endon)
+
+def move(listx, pattern, color, pixels=0, arealist=None, stfrom=0, endon=180):
+    if pixels > 0:
+        moveup(listx, pattern, color, pixels, arealist, stfrom, endon)
+    elif pixels < 0:
+        movedown(listx, pattern, color, stfrom=stfrom, endon=endon)
+
 
 def movedown(listx, pattern, color, stfrom, endon):
     hei = len(listx)
     wid = len(listx[0])
     approcolor = rround(color)
-    for i in range(stfrom,endon):
+    for i in range(stfrom, endon):
         for j in range(wid):
             if rround(pattern[i][j]) == approcolor:
                 clrchange = approcolor
-                for d in range(4): # 4 directions
+                for d in range(4):  # 4 directions
                     ti = i
                     tj = j
-                    if d==0:
-                        tj-=1
-                    elif d==1:
-                        ti-=1
-                    elif d==2:
-                        if tj+1>wid:
-                            tj=0
+                    if d == 0:
+                        tj -= 1
+                    elif d == 1:
+                        ti -= 1
+                    elif d == 2:
+                        if tj + 1 > wid:
+                            tj = 0
                         else:
-                            tj+=1
+                            tj += 1
                     else:
-                        if ti+1>hei:
-                            ti=0
+                        if ti + 1 > hei:
+                            ti = 0
                         else:
-                            ti+=1
-                    if ti>=0 and ti<hei and tj>=0 and tj<wid:
+                            ti += 1
+                    if ti >= 0 and ti < hei and tj >= 0 and tj < wid:
                         compcolor = pattern[ti][tj]
-                        if compcolor<approcolor and compcolor!=0:
+                        if compcolor < approcolor and compcolor != 0:
                             clrchange = compcolor
                 listx[i][j] = clrchange
 
@@ -82,18 +84,18 @@ def moveup(listx, pattern, color, pixels, arealist, stfrom, endon):  # arealist 
                 automatacorrect(j, i, listx, neibour, pixels, val)
 
 
-def automatacorrect(x, y, listx, neib, size,
+def automatacorrect(x, y, listx, neighborhood, size,
                     val):  # RULE 0 - upleft , RULE 1 - upright, RULE 2 - downright, RULE 3 - downleft
     hei = len(listx)
     wid = len(listx[0])
     queue = []
-    if neib[0] and neib[3]:
+    if neighborhood[0] and neighborhood[3]:
         queue.append(0)
-    if neib[0] and neib[1]:
+    if neighborhood[0] and neighborhood[1]:
         queue.append(1)
-    if neib[2] and neib[1]:
+    if neighborhood[2] and neighborhood[1]:
         queue.append(2)
-    if neib[2] and neib[3]:
+    if neighborhood[2] and neighborhood[3]:
         queue.append(3)
     for k in queue:
         i = y
