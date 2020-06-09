@@ -1,29 +1,95 @@
 .vbox {
+	-fx-background-color: white;
+	-fx-pref-width: 200px;
+	-fx-border-color: black;
+	-fx-border-width: 1px;
+	-fx-border-style: solid;
+	-fx-font-size: 14px;
+	-fx-translate-x: 30px;
+}
+.borderPane{
 	-fx-background-color: #c0c0c0;
-	-fx-pref-width:200px;
-	-fx-border-color:black;
-	-fx-border-width:1px;
-	-fx-border-style:solid;
+}
+.g1 {
+	-fx-translate-x: 80px;
+	-fx-translate-y: 215px;
+}
+.g2 {
+	-fx-translate-x: 220px;
+	-fx-translate-y: 215px;
+}
+.simFoot {
+	-fx-font: normal 35px 'serif';
+	-fx-translate-x: 40px;
+	-fx-translate-y: -40px;
+}
+.actFoot {
+	-fx-font: normal 35px 'serif';
+	-fx-translate-x: 40px;
+	-fx-translate-y: -40px;
+}
+.scale {
+	-fx-scale-x: 0.8;
+	-fx-scale-y: 0.8;
+	-fx-translate-x: -14px;
+	-fx-translate-y: 50px;
+}
+.fileName{
+	-fx-translate-y: 710;
+	-fx-translate-x: 28;
+	-fx-font: normal 25px 'serif';
+}
+.currentYear {
+	-fx-font: normal bold 22px 'serif';
+	-fx-translate-x: 7px;
+	-fx-translate-y: 12px;
 }
 .gridpane {
 	-fx-background-color: #c0c0c0;
-	-fx-border-color:white;
+	-fx-border-color: #c0c0c0;
 	-fx-border-width:1px;
 	-fx-border-style:solid;
-	//-fx-grid-lines-visible:true;
-	-fx-hgap:10px;
+	-fx-grid-lines-visible:false;
+	-fx-hgap:50px;
 	-fx-vgap:10px;
 }
-.pane {
-	-fx-background-color: darkblue;
-	-fx-border-color:white;
-	-fx-border-width:2px;
+.pane1 {
+	-fx-background-color: darkgrey;
+	-fx-border-color: black;
+	-fx-border-width: 5px;
 	-fx-border-style:solid;
+	-fx-content-display: center;
+	-fx-translate-x: 22px;
+	-fx-translate-y: 100px;
 }
-.img {
+.pane2 {
+	-fx-background-color: darkgrey;
+	-fx-border-color: black;
+	-fx-border-width: 5px;
+	-fx-border-style:solid;
+	-fx-content-display: center;
+	-fx-translate-x: 12px;
+	-fx-translate-y: 100px;
+
+}
+.img1 {
     -fx-pref-width:362px;
     -fx-pref-height:182px;
     -fx-border-color:white;
 	-fx-border-width:2px;
 	-fx-border-style:solid;
+	-fx-translate-y: 90px;
+	-fx-translate-x: 26px;
+}
+.img2 {
+	-fx-pref-width:362px;
+	-fx-pref-height:182px;
+	-fx-border-color:white;
+	-fx-border-width:2px;
+	-fx-border-style:solid;
+	-fx-translate-y: 90px;
+	-fx-translate-x: 16px;
+}
+.yearMenu {
+	-fx-pref-width: 200px;
 }
