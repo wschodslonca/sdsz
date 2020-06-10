@@ -8,7 +8,7 @@ import os
 from sets.func import *
 
 
-def run(year=2006):
+def sim(year=2006):
     # consts
     BASELOW = 145  # 124
     BASEUP = 595  # 604
@@ -84,8 +84,8 @@ def run(year=2006):
                 data = filetolist(path)
                 pattern = deepcopy(data)
 
+                # antarctic
                 if day >= 1 and month >= 7:
-                    # antarctic
                     arealist = filetolist(patharea)
                     for cl in range(queuedownstart, queuedownend - 1, -25):
                         move(data, pattern, cl, pixels, arealist, stfromdown, 180)
@@ -116,4 +116,4 @@ def run(year=2006):
 
 
 if __name__ == '__main__':
-    run()
+    sim()

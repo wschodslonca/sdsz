@@ -37,8 +37,8 @@ public class Main extends Application {
     }
 
 
-    private static int YEARL = 2006; // year of legit data
-    private static int YEARS = 2006; // year of simulated data
+    private static int YEARL = 2000; // year of legit data
+    private static int YEARS = 2000; // year of simulated data
     //imgs
 
     private static final String EARTH_MAP_IMG = "/resources/img/earthMap.jpg";
