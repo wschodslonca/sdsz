@@ -37,15 +37,15 @@ public class Main extends Application {
     }
 
 
-    private static int YEARL = 2000; // year of legit data
-    private static int YEARS = 2000; // year of simulated data
+    private static int YEARL = 1986; // year of legit data
+    private static int YEARS = 1986; // year of simulated data
     //imgs
 
     private static final String EARTH_MAP_IMG = "/resources/img/earthMap.jpg";
     private static final String COLOUR_SCALE = "/resources/img/colourscale.jpg";
     private static final String TEST = "/resources/img/earth288.png";
-    private static final int [] yearsInt = IntStream.rangeClosed(1978, 2020).toArray();
-    private static final String[] years = new String[43];
+    private static final int [] yearsInt = IntStream.rangeClosed(1986, 2020).toArray();
+    private static final String[] years = new String[35];
     private static String NASA_IMG_PATH_LEGIT = "", NASA_IMG_PATH_SIM = "";
 
     private static final int RADIUS = 180;
@@ -122,7 +122,7 @@ public class Main extends Application {
         final String[] pathSim = { "" };
         pathLegit[0] = setLegitFilePath(fileL[0]);
         pathSim[0] = setSimFilePath(fileL[0]);
-        for ( int i = 0; i < 43; i++) years[i] = String.valueOf(yearsInt[i]);
+        for ( int i = 0; i < 35; i++) years[i] = String.valueOf(yearsInt[i]);
 
         ImageHolder imgHolderL = new ImageHolder(pathLegit[0]);
         ImageHolder imgHolderS = new ImageHolder(pathSim[0]);
@@ -164,10 +164,11 @@ public class Main extends Application {
                 YEARL = YEARS = yearsInt[new_value.intValue()];
                 NASA_IMG_PATH_LEGIT = setLegitPath(YEARL);
                 NASA_IMG_PATH_SIM = setSimPath(YEARL);
+                fileL[0] = getFiles();
                 pathLegit[0] = setLegitFilePath(fileL[0]);
                 pathSim[0] = setSimFilePath(fileL[0]);
-                fileL[0] = getFiles();
                 currentYear.setText("Current year: " + YEARL);
+                imgNr.set(0);
                 imgSwitch(mat1,mat2, imgNr, fileL[0], imgHolderL, imgHolderS, legitImg, simImg, fileName);
 
 
