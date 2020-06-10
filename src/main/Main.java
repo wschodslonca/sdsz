@@ -111,7 +111,8 @@ public class Main extends Application {
         p2.getChildren().add(group2);
 
 
-        PhongMaterial mat = new PhongMaterial();
+        PhongMaterial mat1 = new PhongMaterial();
+        PhongMaterial mat2 = new PhongMaterial();
         AtomicInteger imgNr = new AtomicInteger(0);
 
         NASA_IMG_PATH_LEGIT = setLegitPath(YEARL);
@@ -167,7 +168,7 @@ public class Main extends Application {
                 pathSim[0] = setSimFilePath(fileL[0]);
                 fileL[0] = getFiles();
                 currentYear.setText("Current year: " + YEARL);
-                imgSwitch(mat, imgNr, fileL[0], imgHolderL, imgHolderS, legitImg, simImg, fileName);
+                imgSwitch(mat1,mat2, imgNr, fileL[0], imgHolderL, imgHolderS, legitImg, simImg, fileName);
 
 
             }
@@ -190,9 +191,10 @@ public class Main extends Application {
         group2.translateYProperty().set(180);
         group2.translateZProperty().set(500);
 
-        mat.setDiffuseMap(imgHolderL.getImg());
-        s1.setMaterial(mat);
-        s2.setMaterial(mat);
+        mat1.setDiffuseMap(imgHolderS.getImg());
+        mat2.setDiffuseMap(imgHolderL.getImg());
+        s1.setMaterial(mat1);
+        s2.setMaterial(mat2);
 
         initMouseControl(group1);
         initMouseControl(group2);
@@ -202,14 +204,14 @@ public class Main extends Application {
                 case LEFT:
                     if (imgNr.get() > 0) {
                         imgNr.getAndDecrement();
-                        imgSwitch(mat, imgNr, fileL[0], imgHolderL, imgHolderS, legitImg, simImg, fileName);
+                        imgSwitch(mat1,mat2, imgNr, fileL[0], imgHolderL, imgHolderS, legitImg, simImg, fileName);
                     }
                     break;
                 case D:
                 case RIGHT:
                     if (imgNr.get() < fileL[0].length-1) {
                         imgNr.getAndIncrement();
-                        imgSwitch(mat, imgNr, fileL[0], imgHolderL, imgHolderS, legitImg, simImg, fileName);
+                        imgSwitch(mat1, mat2, imgNr, fileL[0], imgHolderL, imgHolderS, legitImg, simImg, fileName);
                     }
                     break;
             }
@@ -219,10 +221,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void imgSwitch(PhongMaterial mat, AtomicInteger imgNr, File[] fileL, ImageHolder imgHolderL, ImageHolder imgHolderS, ImageView legitImg, ImageView simImg, Text fileNameT) {
+    private void imgSwitch(PhongMaterial mat1, PhongMaterial mat2, AtomicInteger imgNr, File[] fileL, ImageHolder imgHolderL, ImageHolder imgHolderS, ImageView legitImg, ImageView simImg, Text fileNameT) {
         imgHolderL.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_LEGIT +fileL[imgNr.get()].getName())));
         imgHolderS.setImage(new Image(getClass().getResourceAsStream(NASA_IMG_PATH_SIM + fileL[imgNr.get()].getName())));
-        mat.setDiffuseMap(imgHolderL.getImg());
+        mat1.setDiffuseMap(imgHolderS.getImg());
+        mat2.setDiffuseMap(imgHolderL.getImg());
         legitImg.setImage(imgHolderL.getImg());
         simImg.setImage(imgHolderS.getImg());
         fileNameT.setText(fileL[imgNr.get()].getName());
